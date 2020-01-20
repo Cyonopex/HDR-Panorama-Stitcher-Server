@@ -70,5 +70,11 @@ def upload_file_API():
 		resp.status_code = 500
 		return resp
 
+@app.route('/test', methods=['GET'])
+def get_api():
+	resp = jsonify({'message':'HELLO WORLD'})
+	resp.status_code = 200
+	return resp
+
 if __name__ == "__main__":
-    app.run()
+    app.run(host='0.0.0.0')
