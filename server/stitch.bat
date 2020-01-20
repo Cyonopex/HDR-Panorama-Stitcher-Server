@@ -9,7 +9,13 @@ echo Generate and prune control points
 ..\hugin\bin\cpclean -o temp\p.pto temp\p.pto
 
 echo Use Hugin's Autooptimiser
-..\hugin\bin\autooptimiser -a -l -s -m -o temp\p.pto temp\p.pto
+..\hugin\bin\autooptimiser -a -l -s -o temp\p.pto temp\p.pto
+
+echo Custom vig_optimize (for HDR, fixed exposure)
+
+..\hugin\bin\pto_var --opt Vb,Vx,Ra -o temp\p.pto temp\p.pto
+
+..\hugin\bin\vig_optimize -o temp\p.pto temp\p.pto
 
 echo Set output options
 ..\hugin\bin\pano_modify -o temp\p.pto --center --straighten --canvas=AUTO --crop=AUTO --output-type=HDR --hdr-file=EXR --hdr-compression=LZW  temp\p.pto
