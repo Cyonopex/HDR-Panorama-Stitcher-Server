@@ -6,6 +6,8 @@ from flask import Flask, flash, request, redirect, render_template, jsonify
 from werkzeug.utils import secure_filename
 from threading import Thread
 import stitchHandler
+from os import listdir
+from os.path import isfile, join
 
 ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
 
@@ -62,8 +64,8 @@ def upload_file_API():
 	if success:
 		resp = jsonify({'message' : 'Files successfully uploaded'})
 		resp.status_code = 201
-		thread = Thread(target=stitchHandler.stitch)
-		thread.start()
+		#thread = Thread(target=stitchHandler.stitch)
+		#thread.start()
 		return resp
 	else:
 		resp = jsonify(errors)
@@ -75,6 +77,21 @@ def get_api():
 	resp = jsonify({'message':'HELLO WORLD'})
 	resp.status_code = 200
 	return resp
+
+@app.route('/allimages', methods=['GET'])
+def get_all_images():
+
+	fileList = getAllImagesResponse()
+	resp = jsonify(fileList)
+	resp.status_code = 200
+	return resp
+
+def getAllImagesResponse():
+
+	file_list = [{"filename":f} for f in listdir(app.config['IMAGE_LOCATION']) if isfile(join(app.config['IMAGE_LOCATION'], f))]
+	file_list_obj = {"data":file_list}
+
+	return file_list_obj
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')
