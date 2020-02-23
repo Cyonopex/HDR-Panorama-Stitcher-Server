@@ -9,7 +9,7 @@ import stitchHandler
 from os import listdir
 from os.path import isfile, join
 
-ALLOWED_EXTENSIONS = set(['txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'])
+ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 def allowed_file(filename):
 	return '.' in filename and filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
@@ -44,6 +44,8 @@ def upload_file_API():
 		return resp
 	
 	files = request.files.getlist('files[]')
+
+	fileName = request.form["fileName"]
 	
 	errors = {}
 	success = False
@@ -51,6 +53,7 @@ def upload_file_API():
 	for file in files:		
 		if file and allowed_file(file.filename):
 			filename = secure_filename(file.filename)
+			filenameNoExt, fileExt = os.path.splitext(filename)
 			file.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
 			success = True
 		else:
@@ -64,8 +67,8 @@ def upload_file_API():
 	if success:
 		resp = jsonify({'message' : 'Files successfully uploaded'})
 		resp.status_code = 201
-		#thread = Thread(target=stitchHandler.stitch)
-		#thread.start()
+		thread = Thread(target=stitchHandler.stitch, args=(fileName,))
+		thread.start()
 		return resp
 	else:
 		resp = jsonify(errors)

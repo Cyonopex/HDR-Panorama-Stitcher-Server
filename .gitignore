@@ -1,1 +1,5 @@
 hugin/
+server/backup/
+server/images/
+server/output/
+server/temp/

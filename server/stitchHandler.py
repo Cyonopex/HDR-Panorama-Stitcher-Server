@@ -1,11 +1,10 @@
 import os
 
-def stitch():
+def stitch(filename):
 
     files = os.listdir(os.path.join(os.path.dirname(__file__), 'images'))
     if not files:
         return False
-    filename = files[0]
     filename, fileExt = os.path.splitext(filename)
     command = "stitch.bat " + filename
 
