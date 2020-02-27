@@ -12,3 +12,6 @@ def stitch(filename):
 
     command2 = "cleanup.bat " + filename
     output2 = os.system(command2)
+    
+    command3 = "startblender.bat"
+    output3 = os.system(command3)

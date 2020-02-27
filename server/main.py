@@ -9,6 +9,10 @@ import stitchHandler
 from os import listdir
 from os.path import isfile, join
 
+import logging
+log = logging.getLogger('werkzeug')
+log.setLevel(logging.ERROR)
+
 ALLOWED_EXTENSIONS = set(['png', 'jpg', 'jpeg', 'gif'])
 
 def allowed_file(filename):
@@ -20,6 +24,7 @@ def upload_form():
 
 @app.route('/', methods=['POST'])
 def upload_file():
+    print("POST Request sent to server")
 	if request.method == 'POST':
         # check if the post request has the files part
 		if 'files[]' not in request.files:
@@ -97,4 +102,5 @@ def getAllImagesResponse():
 	return file_list_obj
 
 if __name__ == "__main__":
+    print("Starting server...")
     app.run(host='0.0.0.0')
