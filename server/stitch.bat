@@ -1,5 +1,5 @@
 @echo off
-SET filename=%1 >nul
+SET filename=%1 >nul 2>&1
 
 mkdir backup\%1 >nul 2>&1
 mkdir temp\%1 >nul  2>&1
@@ -32,8 +32,8 @@ echo Step 6/7: Set output options
 echo Step 7/7: Generate remapped photos
 ..\hugin\bin\nona -m EXR_m -r hdr -o temp\%1\p temp\%1\p.pto >nul 2>&1
 
-..\hugin\bin\enblend -o output\%filename%.exr temp\%1\p*.exr >nul 2>&1
+..\hugin\bin\enblend -o output\%1.exr temp\%1\p*.exr >nul 2>&1
 
-copy \Y output\%filename%.exr blender\image.exr >nul
+copy /Y output\%1.exr blender\image.exr >nul 2>&1
 
 echo STITCHING COMPLETE

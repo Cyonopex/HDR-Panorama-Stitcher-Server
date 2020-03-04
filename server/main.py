@@ -24,7 +24,7 @@ def upload_form():
 
 @app.route('/', methods=['POST'])
 def upload_file():
-    print("POST Request sent to server")
+	print("POST Request sent to server")
 	if request.method == 'POST':
         # check if the post request has the files part
 		if 'files[]' not in request.files:
