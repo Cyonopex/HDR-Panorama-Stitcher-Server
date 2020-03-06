@@ -1,4 +1,5 @@
-hugin/
+hugin/doc/
+hugin/share/
 server/backup/
 server/images/
 server/output/
